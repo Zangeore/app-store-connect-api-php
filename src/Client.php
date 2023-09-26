@@ -24,10 +24,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use Cantie\AppStoreConnect\Http\REST;
 
-use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler as MonologStreamHandler;
 use Carbon\Carbon;
 
 /**
@@ -53,11 +50,6 @@ class Client
     private $jwtTokenExpTime = 0;
 
     /**
-     * @var ?LoggerInterface $logger
-     */
-    private $logger;
-
-    /**
      * @var boolean $deferExecution
      */
     private $deferExecution = false;
@@ -80,7 +72,7 @@ class Client
     {
         return self::LIBVER;
     }
-    
+
     public function setApiKey($keyPath)
     {
         if (is_string($keyPath)) {
@@ -202,35 +194,7 @@ class Client
         return new GuzzleClient($options);
     }
 
-    /**
-     * Set the Logger object
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
 
-    /**
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        if (!isset($this->logger)) {
-            $this->logger = $this->createDefaultLogger();
-        }
-
-        return $this->logger;
-    }
-
-    protected function createDefaultLogger()
-    {
-        $logger = new Logger('apple-store-connect-client');
-        $handler = new MonologStreamHandler('php://stderr', Logger::NOTICE);
-        $logger->pushHandler($handler);
-
-        return $logger;
-    }
 
     /**
      * Declare whether making API calls should make the call immediately, or

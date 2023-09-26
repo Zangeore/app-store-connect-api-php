@@ -80,14 +80,6 @@ class Resource
   public function call($name, $arguments, $expectedClass = null)
   {
     if (!isset($this->methods[$name])) {
-      $this->client->getLogger()->error(
-          'Service method unknown',
-          array(
-              'service' => $this->serviceName,
-              'resource' => $this->resourceName,
-              'method' => $name
-          )
-      );
 
       throw new AppleException(
           "Unknown function: " .
@@ -144,15 +136,6 @@ class Resource
 
     foreach ($parameters as $key => $val) {
       if ($key != 'postBody' && ! isset($method['parameters'][$key])) {
-        $this->client->getLogger()->error(
-            'Service parameter unknown',
-            array(
-                'service' => $this->serviceName,
-                'resource' => $this->resourceName,
-                'method' => $name,
-                'parameter' => $key
-            )
-        );
         throw new AppleException("($name) unknown parameter: '$key'");
       }
     }
@@ -162,15 +145,6 @@ class Resource
           $paramSpec['required'] &&
           ! isset($parameters[$paramName])
       ) {
-        $this->client->getLogger()->error(
-            'Service parameter missing',
-            array(
-                'service' => $this->serviceName,
-                'resource' => $this->resourceName,
-                'method' => $name,
-                'parameter' => $paramName
-            )
-        );
         throw new AppleException("($name) missing required param: '$paramName'");
       }
       if (isset($parameters[$paramName])) {
@@ -184,15 +158,6 @@ class Resource
       }
     }
 
-    $this->client->getLogger()->info(
-        'Service Call',
-        array(
-            'service' => $this->serviceName,
-            'resource' => $this->resourceName,
-            'method' => $name,
-            'arguments' => $parameters,
-        )
-    );
     // build the service uri
     $url = $this->createRequestUri(
         $method['path'],

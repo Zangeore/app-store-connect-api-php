@@ -329,7 +329,6 @@ class MediaFileUpload
     }
 
     $error = "Failed to start the resumable upload (HTTP {$message})";
-    $this->client->getLogger()->error($error);
 
     throw new AppleException($error);
   }

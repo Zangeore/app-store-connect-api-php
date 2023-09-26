@@ -3,6 +3,7 @@
     "description": "A PHP client library for accessing App Store Connect APIs",
     "keywords": ["apple", "appstore", "appstore-api", "php"],
     "license": "MIT",
+    "version": "dev-without_monolog",
     "authors": [
         {
             "name": "Long Pham",
@@ -14,8 +15,7 @@
         "google/auth": "^1.10",
         "guzzlehttp/guzzle": "^7.0.1",
         "nesbot/carbon": "^2.31",
-        "firebase/php-jwt": "^5.3",
-        "monolog/monolog": "^2.0"
+        "firebase/php-jwt": "^5.3"
     },
     "autoload": {
         "psr-4": {
